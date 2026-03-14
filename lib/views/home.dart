@@ -17,6 +17,10 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   TextEditingController orderIdController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  List<String> countryCode = [
+    '+57 ', //'Online'
+  ];
+  String dropDownValue = '+57 ';
 
   @override
   void dispose() {
@@ -84,10 +88,50 @@ class _HomeViewState extends State<HomeView> {
                         placeHolder: '97',
                       ),
                       SizedBox(height: 10),
-                      CustomTextField(
-                        controller: phoneController,
-                        labelText: 'Telefono del repartidor',
-                        placeHolder: '+57 1234567892',
+                      Text('Telefono',
+                          style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: colorsPalete['white'])),
+                      SizedBox(height: 5),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                                width: 90,
+                                height: 63,
+                                decoration: BoxDecoration(
+                                    color: colorsPalete['pink'],
+                                    borderRadius: BorderRadius.circular(8)),
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                        isExpanded: true,
+                                        dropdownColor: colorsPalete['pink'],
+                                        value: dropDownValue,
+                                        icon: Icon(Icons.arrow_drop_down,
+                                            color: colorsPalete['dark brown']),
+                                        items: countryCode
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) => DropdownMenuItem(
+                                                value: value,
+                                                child: Text(value,
+                                                    style: GoogleFonts.nunito(
+                                                        fontSize: 21,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: colorsPalete[
+                                                        'dark brown']))))
+                                            .toList(),
+                                        onChanged: (String? value) =>
+                                            setState(() => dropDownValue = value!)))),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: CustomTextField(
+                                  controller: phoneController,
+                                  showText: false,
+                                  placeHolder: '3112345678'),
+                            ),
+                          ]
                       ),
                       SizedBox(height: 10),
                       Consumer<crispyDriverProvider>(
@@ -100,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
                                     sanitizePhone(phoneController.text)) {
                                   provider.startStreamUpdateLoc(
                                     orderIdController.text,
-                                    phoneController.text,
+                                    dropDownValue+phoneController.text,
                                   );
                                 } else {
                                   snackBarMessage(

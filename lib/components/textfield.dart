@@ -7,53 +7,48 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final String placeHolder;
   final ValueChanged<String>? onChanged;
+  final bool showText;
 
-  CustomTextField({
-    required this.controller,
-    required this.labelText,
-    this.onChanged,
-    required this.placeHolder
-  });
+  CustomTextField(
+      {required this.controller,
+        this.labelText='',
+        this.onChanged,
+        required this.placeHolder,
+        this.showText = true});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      if (showText)
+        Column(children: [
           Text(labelText,
               style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: colorsPalete['white']
-              )),
-          SizedBox(height: 5),
-          Container(
-              decoration: BoxDecoration(
-                  color: colorsPalete['pink'],
-                  borderRadius: BorderRadius.circular(12)
-              ),
-              child: TextField(
-                  cursorColor: colorsPalete['dark brown'],
-                  controller: controller,
-                  style: GoogleFonts.nunito(
-                      fontSize: 24,
+                  color: colorsPalete['white'])),
+          SizedBox(height: 5)
+        ]),
+      Container(
+          decoration: BoxDecoration(
+              color: colorsPalete['pink'],
+              borderRadius: BorderRadius.circular(12)),
+          child: TextField(
+              cursorColor: colorsPalete['dark brown'],
+              controller: controller,
+              style: GoogleFonts.nunito(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: colorsPalete['dark brown']),
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: placeHolder,
+                  hintStyle: GoogleFonts.nunito(
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: colorsPalete['dark brown']
-                  ),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: placeHolder,
-                      hintStyle: GoogleFonts.nunito(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xaa24151a)
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14)
-                  ),
-                  onChanged: onChanged
-              )
-          )
-        ]
-    );
+                      color: Color(0xaa24151a)),
+                  contentPadding:
+                  EdgeInsets.symmetric(horizontal: 12, vertical: 14)),
+              onChanged: onChanged))
+    ]);
   }
 }
