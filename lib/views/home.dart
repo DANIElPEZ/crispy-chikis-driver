@@ -81,6 +81,7 @@ class _HomeViewState extends State<HomeView> {
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomTextField(
                         controller: orderIdController,
@@ -99,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Container(
                                 width: 90,
-                                height: 63,
+                                height: 55,
                                 decoration: BoxDecoration(
                                     color: colorsPalete['pink'],
                                     borderRadius: BorderRadius.circular(8)),
